@@ -7,7 +7,8 @@ const QUERY_TYPES = {
   NORMAL: 0x00,
   LAMBDA: 0x01,
   MODIFIER: 0x02,
-  GEO_DISTANCE: 0x03
+  GEO_DISTANCE: 0x03,
+  EXPRESSION: 0x04
 }
 
 class FilterNode {
@@ -25,17 +26,6 @@ class FilterNode {
 
     this.obj = obj
 
-    // Check if it's an expression
-    if (expr) {
-      this._checkVars(['expr'], 'You added `expr`, remove other attributes, or remove `expr`')
-      this.str = expr
-    }
-
-    // If this is a lambda, must have a variable
-    this._checkVerifyLambda(obj)
-    // Make sure proper params are set
-    this._checkVerifyExpression(obj)
-
     // Set the subject values recursively.
     if (typeof obj.left === 'object') {
       this.subject = new FilterNode(obj.left).toString()
@@ -50,10 +40,12 @@ class FilterNode {
       this.object = obj.right
     }
 
-    // check if this is certain type of filter node, if it is flag it.
-    this._checkVerifyFlag(obj)
+    // Check if it's an expression
+    if (expr) {
+      this._checkVars(['expr'], 'You added `expr`, remove other attributes, or remove `expr`')
+      this.str = expr
+    }
 
-    this.comparator = obj.comparator
   }
 
   /**
@@ -75,10 +67,6 @@ class FilterNode {
   toString () {
     let str = this.str || ''
 
-    if (str) {
-      return str
-    }
-
     switch (this.type) {
       case QUERY_TYPES.NORMAL:
         this.str = '';
@@ -90,7 +78,9 @@ class FilterNode {
         this.str = '';
       break
       case QUERY_TYPES.GEO_DISTANCE:
-        this.styr= '';
+        this.str= '';
+      break
+      case QUERY_TYPES.EXPRESSION:
       break
     }
 
