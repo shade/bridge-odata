@@ -65,17 +65,25 @@ The SDK part of the code looks like:
 
 ## bridge.$filter(query)
 
+Filtered queries can get complex however they are fairly powerful. One can write a JS object literal as the query and that will map to a string query. e.g.
+
 ```js
 {right: 'a', op: 'eq', left: 'b'} => 'a eq b'
 {right: 'a', op: 'intersect', left: 'b'} => 'geo.intersect(a,b)'
 ```
+
+### Hardcoded operations
 The full list of operations can be found in the `src/lib/maps.js' file, but are not limited to:
 
+|Name | Operation | Description |
+|--|--|--|
+|eq| 'a eq b' | checks if a == b |
+|neq| 'a neq b' | checks if a != b |
+|lt| 'a lt b' | checks if a < b |
+|gt| 'a gt b' | checks if a > b |
+|ge| 'a ge b' | checks if a >= b |
+|le| 'a le b' | checks if a <= b |
 
-|Name|Map|
-|--|--|
-|eq| 'a eq b' |
-|neq| 'a neq b' |
-|lt| 'a lt b' |
-|gt| 'a gt b' |
-|ge| 'a ge b' |
+
+### Custom operations
+
