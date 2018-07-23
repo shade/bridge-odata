@@ -1,6 +1,7 @@
 /* jshint esversion: 6 */
 const {
-  COMPARATOR_MAP
+  COMPARATOR_MAP,
+  MODIFIER_MAP
 } = require('./maps')
 
 const QUERY_TYPES = {
@@ -34,13 +35,17 @@ class FilterNode {
     if (obj.expr) {
       this._checkVars(['expr'], 'You added `expr`, remove other attributes, or remove `expr`')
       this.str = obj.expr
+      return
     }
 
     // Check if it's a modifier
     if (obj.modifier) {
       this._checkVars(['modifier', 'value'], 'Using a modifier must only have `modifier` and `value`')
+      this._checkMakeModifer()
+      return
     }
 
+    // Check if
   }
 
   /**
@@ -57,6 +62,21 @@ class FilterNode {
         throw new Error(msg)
       }
     }
+  }
+
+  /**
+   * Constructs a modifier style string from this.obj
+   */
+  _checkMakeModifer () {
+    const { modifier, value } = this.obj
+
+    if (!MODIFIER_MAP.hasOwnProperty(modifier)) {
+      throw new Error(`'${modifier}', is not a valid modifier`)
+    }
+
+    // Grab the modification fn and construct str
+    let mod = MODIFIER_MAP[modifier]
+    this.str = mod(value)
   }
 
   toString () {
