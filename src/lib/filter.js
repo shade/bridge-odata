@@ -12,7 +12,7 @@ const QUERY_TYPES = {
 
 class FilterNode {
   constructor (obj) {
-    const { left, comparator, right, variable, expr } = obj
+    const { left, comparator, right, variable, expr, modifier } = obj
 
     if (expr) {
       this.str = expr
@@ -37,6 +37,9 @@ class FilterNode {
     } else {
       this.object = obj.right
     }
+
+    // check if this is certain type of filter node, if it is flag it.
+    this._checkVerifyFlag(obj)
 
     this.comparator = obj.comparator
   }
