@@ -84,6 +84,9 @@ The full list of operations can be found in the `src/lib/maps.js' file, but are 
 |ge| 'a ge b' | checks if a >= b |
 |le| 'a le b' | checks if a <= b |
 
+#### Lambdas
+The `any` and `all` operations are referred to and act as lambdas in the OData syntax.
+
 
 ### Custom operations (unsafe)
 In the event that one is aware of an operation that currently doesn't exist within the set of hardcoded operations they can create their own. With this syntax the object literal attributes must have the same name as the operation function parameters.
