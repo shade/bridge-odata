@@ -12,11 +12,23 @@ const QUERY_TYPES = {
 
 class FilterNode {
   constructor (obj) {
-    const { left, comparator, right, variable, expr, modifier } = obj
+    const {
+      left,
+      right,
+      modifier,
+      value,
+      expr,
+      inner,
+      subject,
+      comparator,
+    } = obj
 
+    this.obj = obj
+
+    // Check if it's an expression
     if (expr) {
+      this._checkVars(['expr'], 'You added `expr`, remove other attributes, or remove `expr`')
       this.str = expr
-      return
     }
 
     // If this is a lambda, must have a variable
@@ -44,24 +56,18 @@ class FilterNode {
     this.comparator = obj.comparator
   }
 
-  _checkVerifyLambda (obj) {
-    if (obj.comparator === 'any' || obj.comparator === 'all') {
-      if (!obj.variable) {
-        throw new Error('Lambda expressions (any, all), must specify a variable')
-      }
-    }
-  }
+  /**
+   * Checks to see if there are attributes not in attr that are in obj. Throws if that is the case.
+   *
+   * @param {Array.<string>} attrs - Array of valid attributes
+   * @param {string} msg - A string message to throw if this fails
+   */
+  _checkVars (attrs, msg) {
+    let obj = this.obj
 
-  _checkVerifyExpression (obj) {
-    const { left, comparator, right, variable, expression } = obj
-
-    if (expression && (left || comparator || right || variable)) {
-      throw new Error('expression overrides (subject, comparator, object, and variable) please clean your $filter param')
-    }
-
-    if (!expression) {
-      if (!(left || comparator || right)) {
-        throw new Error('(subject, comparator, and object) must be specified, otherwise use `expression`')
+    for (var key in obj) {
+      if (!attrs.includes(key)) {
+        throw new Error(msg)
       }
     }
   }
