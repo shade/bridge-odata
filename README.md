@@ -61,3 +61,21 @@ The SDK part of the code looks like:
     return prim
   }
 ```
+
+
+## bridge.$filter(query)
+
+```js
+{right: 'a', op: 'eq', left: 'b'} => 'a eq b'
+{right: 'a', op: 'intersect', left: 'b'} => 'geo.intersect(a,b)'
+```
+The full list of operations can be found in the `src/lib/maps.js' file, but are not limited to:
+
+
+|Name|Map|
+|--|--|
+|eq| 'a eq b' |
+|neq| 'a neq b' |
+|lt| 'a lt b' |
+|gt| 'a gt b' |
+|ge| 'a ge b' |
