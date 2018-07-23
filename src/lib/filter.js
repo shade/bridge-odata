@@ -13,17 +13,7 @@ const QUERY_TYPES = {
 
 class FilterNode {
   constructor (obj) {
-    const {
-      left,
-      right,
-      modifier,
-      value,
-      expr,
-      inner,
-      subject,
-      comparator,
-    } = obj
-
+    // Set for ease of access to in class helper functions
     this.obj = obj
 
     // Set the subject values recursively.
@@ -41,9 +31,14 @@ class FilterNode {
     }
 
     // Check if it's an expression
-    if (expr) {
+    if (obj.expr) {
       this._checkVars(['expr'], 'You added `expr`, remove other attributes, or remove `expr`')
-      this.str = expr
+      this.str = obj.expr
+    }
+
+    // Check if it's a modifier
+    if (obj.modifier) {
+      this._checkVars(['modifier', 'value'], 'Using a modifier must only have `modifier` and `value`')
     }
 
   }
