@@ -22,6 +22,6 @@ const COMPARATOR_MAP = {
 }
 
 
-export {
-  COMPARATOR_MAP as COMPARATOR_MAP
+module.exports = {
+  COMPARATOR_MAP
 }
