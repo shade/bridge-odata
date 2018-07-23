@@ -3,19 +3,26 @@ const {
   COMPARATOR_MAP
 } = require('./maps')
 
+const QUERY_TYPES = {
+  NORMAL: 0x00,
+  LAMBDA: 0x01,
+  MODIFIER: 0x02,
+  GEO_DISTANCE: 0x03
+}
+
 class FilterNode {
   constructor (obj) {
     const { left, comparator, right, variable, expr } = obj
 
-    if (expression) {
+    if (expr) {
       this.str = expr
       return
     }
 
     // If this is a lambda, must have a variable
-    _checkVerifyLambda(obj, keys)
+    this._checkVerifyLambda(obj)
     // Make sure proper params are set
-    _checkVerifyExpression(obj, keys)
+    this._checkVerifyExpression(obj)
 
     // Set the subject values recursively.
     if (typeof obj.left === 'object') {
@@ -34,7 +41,7 @@ class FilterNode {
     this.comparator = obj.comparator
   }
 
-  _checkVerifyLambda (obj, keys) {
+  _checkVerifyLambda (obj) {
     if (obj.comparator === 'any' || obj.comparator === 'all') {
       if (!obj.variable) {
         throw new Error('Lambda expressions (any, all), must specify a variable')
@@ -42,7 +49,7 @@ class FilterNode {
     }
   }
 
-  _checkVerifyExpression (obj, keys) {
+  _checkVerifyExpression (obj) {
     const { left, comparator, right, variable, expression } = obj
 
     if (expression && (left || comparator || right || variable)) {
@@ -57,8 +64,28 @@ class FilterNode {
   }
 
   toString () {
-    const {expression, subject, comparator, object} = this
-    return this.str
+    let str = this.str || ''
+
+    if (str) {
+      return str
+    }
+
+    switch (this.type) {
+      case QUERY_TYPES.NORMAL:
+        this.str = '';
+      break
+      case QUERY_TYPES.LAMBDA:
+        this.str = '';
+      break
+      case QUERY_TYPES.MODIFIER:
+        this.str = '';
+      break
+      case QUERY_TYPES.GEO_DISTANCE:
+        this.styr= '';
+      break
+    }
+
+    return str
   }
 }
 
