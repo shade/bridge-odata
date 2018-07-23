@@ -65,7 +65,7 @@ The SDK part of the code looks like:
 
 ## bridge.$filter(query)
 
-Filtered queries can get complex however they are fairly powerful. One can write a JS object literal as the query and that will map to a string query. e.g.
+Filtered queries can get complex however they are fairly powerful. One can write a JS object literal as the query that will map to a string query. e.g.
 
 ```js
 {right: 'a', op: 'eq', left: 'b'} => 'a eq b'
@@ -85,5 +85,26 @@ The full list of operations can be found in the `src/lib/maps.js' file, but are 
 |le| 'a le b' | checks if a <= b |
 
 
-### Custom operations
+### Custom operations (unsafe)
+In the event that one is aware of an operation that currently doesn't exist within the set of hardcoded operations they can create their own. With this syntax the object literal attributes must have the same name as the operation function parameters.
 
+#### Example of a valid custom query
+```js
+// Valid!
+{
+  right: 'Joe',
+  left: '"The greatest person ever"',
+  op: (right, left) => `${right} eq ${left}`
+} => 'Joe eq "The greatest person ever"'
+
+```
+
+#### Example of an invalid custom query
+```js
+// Invalid! Will throw error
+{
+  right: 'Joe',
+  left: '"The greatest person ever"',
+  op: (a,b) => `${a} eq ${b}`
+} => ERROR
+```
