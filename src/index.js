@@ -38,10 +38,8 @@ class RetslyOData {
     return new Promise((resolve, reject) => {
       request
         .get(`${config.BASE_URL}/${vendor}/${endpoint}`)
-        .set({
-          'Authorization': `Bearer ${token}`,
-          'x-query-source': 'odata-sdk'
-        })
+        .set('Authorization', `Bearer ${token}`)
+        .set('x-query-source', 'odata-sdk')
         .query(query)
         .end((err, res) => {
           if (err) {

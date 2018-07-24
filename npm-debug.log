@@ -1,0 +1,97 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'bridge-odata',
+1 verbose cli   '--save' ]
+2 info using npm@3.10.10
+3 info using node@v6.10.1
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData bridge-odata
+8 silly fetchNamedPackageData bridge-odata
+9 silly mapToRegistry name bridge-odata
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry data Result {
+12 silly mapToRegistry   raw: 'bridge-odata',
+12 silly mapToRegistry   scope: null,
+12 silly mapToRegistry   escapedName: 'bridge-odata',
+12 silly mapToRegistry   name: 'bridge-odata',
+12 silly mapToRegistry   rawSpec: '',
+12 silly mapToRegistry   spec: 'latest',
+12 silly mapToRegistry   type: 'tag' }
+13 silly mapToRegistry uri https://registry.npmjs.org/bridge-odata
+14 verbose request uri https://registry.npmjs.org/bridge-odata
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 3:16:17 PM
+17 verbose request using bearer token for auth
+18 verbose request id f8b147a20852c480
+19 verbose etag W/"d9882da74370130d733392b6b071a87b"
+20 verbose lastModified Tue, 24 Jul 2018 21:29:50 GMT
+21 http request GET https://registry.npmjs.org/bridge-odata
+22 http 304 https://registry.npmjs.org/bridge-odata
+23 verbose headers { date: 'Tue, 24 Jul 2018 22:16:17 GMT',
+23 verbose headers   connection: 'keep-alive',
+23 verbose headers   'set-cookie': [ '__cfduid=df9c381747886b88176d7a11a15d861a71532470577; expires=Wed, 24-Jul-19 22:16:17 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+23 verbose headers   'cache-control': 'max-age=300',
+23 verbose headers   'cf-cache-status': 'HIT',
+23 verbose headers   'cf-ray': '43f9c015bbbfbcda-SEA',
+23 verbose headers   etag: '"d9882da74370130d733392b6b071a87b"',
+23 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+23 verbose headers   'last-modified': 'Tue, 24 Jul 2018 21:29:50 GMT',
+23 verbose headers   vary: 'accept-encoding, accept',
+23 verbose headers   server: 'cloudflare' }
+24 silly get cb [ 304,
+24 silly get   { date: 'Tue, 24 Jul 2018 22:16:17 GMT',
+24 silly get     connection: 'keep-alive',
+24 silly get     'set-cookie': [ '__cfduid=df9c381747886b88176d7a11a15d861a71532470577; expires=Wed, 24-Jul-19 22:16:17 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+24 silly get     'cache-control': 'max-age=300',
+24 silly get     'cf-cache-status': 'HIT',
+24 silly get     'cf-ray': '43f9c015bbbfbcda-SEA',
+24 silly get     etag: '"d9882da74370130d733392b6b071a87b"',
+24 silly get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+24 silly get     'last-modified': 'Tue, 24 Jul 2018 21:29:50 GMT',
+24 silly get     vary: 'accept-encoding, accept',
+24 silly get     server: 'cloudflare' } ]
+25 verbose etag https://registry.npmjs.org/bridge-odata from cache
+26 verbose get saving bridge-odata to /Users/joetho/.npm/registry.npmjs.org/bridge-odata/.cache.json
+27 verbose correctMkdir /Users/joetho/.npm correctMkdir not in flight; initializing
+28 silly install normalizeTree
+29 silly loadCurrentTree Finishing
+30 silly loadIdealTree Starting
+31 silly install loadIdealTree
+32 silly cloneCurrentTree Starting
+33 silly install cloneCurrentTreeToIdealTree
+34 silly cloneCurrentTree Finishing
+35 silly loadShrinkwrap Starting
+36 silly install loadShrinkwrap
+37 silly loadShrinkwrap Finishing
+38 silly loadAllDepsIntoIdealTree Starting
+39 silly install loadAllDepsIntoIdealTree
+40 silly rollbackFailedOptional Starting
+41 silly rollbackFailedOptional Finishing
+42 silly runTopLevelLifecycles Finishing
+43 silly install printInstalled
+44 verbose stack Error: Refusing to install bridge-odata as a dependency of itself
+44 verbose stack     at checkSelf (/usr/local/lib/node_modules/npm/lib/install/validate-args.js:53:14)
+44 verbose stack     at Array.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/slide/lib/bind-actor.js:15:8)
+44 verbose stack     at LOOP (/usr/local/lib/node_modules/npm/node_modules/slide/lib/chain.js:15:14)
+44 verbose stack     at chain (/usr/local/lib/node_modules/npm/node_modules/slide/lib/chain.js:20:5)
+44 verbose stack     at /usr/local/lib/node_modules/npm/lib/install/validate-args.js:16:5
+44 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:52:35
+44 verbose stack     at Array.forEach (native)
+44 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:52:11
+44 verbose stack     at Array.forEach (native)
+44 verbose stack     at asyncMap (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:51:8)
+45 verbose cwd /Users/joetho/Documents/work/odata-js-sdk
+46 error Darwin 17.6.0
+47 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "bridge-odata" "--save"
+48 error node v6.10.1
+49 error npm  v3.10.10
+50 error code ENOSELF
+51 error Refusing to install bridge-odata as a dependency of itself
+52 error If you need help, you may report this error at:
+52 error     <https://github.com/npm/npm/issues>
+53 verbose exit [ 1, true ]
