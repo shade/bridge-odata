@@ -8,9 +8,13 @@ const COMPARATOR_MAP = {
   'gt': (subject, object) => `${subject} gt ${object}`,
   'ge': (subject, object) => `${subject} ge ${object}`,
 
+  // Clause operations
+  'and': (subject, object) => `${subject} and ${object}`,
+  'or': (subject, object) => `${subject} or ${object}`,
+
   // String operations
-  'startswith': (subject,object) => `startswith(${subject},'${object}')`,
-  'endswith': (subject,object) => `endswith(${subject},'${object}')`,
+  'startswith': (subject,object) => `startswith(${subject},${object})`,
+  'endswith': (subject,object) => `endswith(${subject},${object})`,
 
   // Geo / Distance operationss
   'distance': (subject,object,op,c) => `geo.distance(${subject},${object}) ${op} ${c}`,
@@ -21,7 +25,22 @@ const COMPARATOR_MAP = {
   'all': (subject, variable, inner) => `${subject}/all(${variable}: ${inner})`
 }
 
+const MODIFIER_MAP = {
+  // Datetime modifier
+  time: s => `time(${s})`,
+  year: s => `year(${s})`,
+  month: s => `month(${s})`,
+  day: s => `day(${s})`,
+  hour: s => `hour(${s})`,
+  min: s => `minute(${s})`,
+  sec: s => `second(${s})`,
+  // String modifiers
+  upper: s => `toupper(${s})`,
+  lower: s => `tolower(${s})`
+}
+
 
 module.exports = {
-  COMPARATOR_MAP
+  COMPARATOR_MAP,
+  MODIFIER_MAP
 }

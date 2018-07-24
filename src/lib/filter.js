@@ -1,91 +1,138 @@
 /* jshint esversion: 6 */
+const acorn = require('acorn');
 const {
-  COMPARATOR_MAP
+  COMPARATOR_MAP,
+  MODIFIER_MAP
 } = require('./maps')
 
-const QUERY_TYPES = {
-  NORMAL: 0x00,
-  LAMBDA: 0x01,
-  MODIFIER: 0x02,
-  GEO_DISTANCE: 0x03
+// None of these are allowed to be 0, ever.
+const FLAGS = {
+  MODIFIER: 0x01
 }
 
 class FilterNode {
   constructor (obj) {
-    const { left, comparator, right, variable, expr } = obj
-
-    if (expr) {
-      this.str = expr
-      return
-    }
-
-    // If this is a lambda, must have a variable
-    this._checkVerifyLambda(obj)
-    // Make sure proper params are set
-    this._checkVerifyExpression(obj)
+    // Set for ease of access to in class helper functions
+    this.obj = obj
 
     // Set the subject values recursively.
     if (typeof obj.left === 'object') {
-      this.subject = new FilterNode(obj.left).toString()
+      let f = new FilterNode(obj.left)
+
+      obj.left = (f.getFlag() === FLAGS.MODIFIER)
+        ? f.toString()
+        : `(${f.toString()})`
     } else {
       this.subject = obj.left
     }
 
     // Set the object values recursively.
     if (typeof obj.right === 'object') {
-      this.object = new FilterNode(obj.right).toString()
+      let f = new FilterNode(obj.right)
+
+      obj.right = (f.getFlag() === FLAGS.MODIFIER)
+        ? f.toString()
+        : `(${f.toString()})`
     } else {
       this.object = obj.right
     }
 
-    this.comparator = obj.comparator
+    // Check if it's an expression
+    if (obj.expr) {
+      this._checkVars(['expr'], 'You added `expr`, remove other attributes, or remove `expr`')
+      this.str = obj.expr
+      return
+    }
+
+    // Check if it's a modifier
+    if (obj.modifier) {
+      this._checkVars(['modifier', 'value'], 'Using a modifier must only have `modifier` and `value`')
+      this._checkMakeModifer()
+      return
+    }
+
+    // Check if it's lambda
+    if (['any','all'].includes(obj.operation)) {
+      this._checkVars([
+        'variable',
+        'left',
+        'inner',
+        'operation'
+      ], 'Lambdas only have `variable`, `operation`, `left`, and `right`. Please clean up the query object')
+
+      this._checkMakeLamdba()
+      return
+    }
+
+    // Because this hasn't been returned yet, it must be normal.
+    this._checkVars(['left', 'right', 'operation'], 'Your query is expressed invalidly, please check the README for more details.')
+    this._checkMakeNormal()
   }
 
-  _checkVerifyLambda (obj) {
-    if (obj.comparator === 'any' || obj.comparator === 'all') {
-      if (!obj.variable) {
-        throw new Error('Lambda expressions (any, all), must specify a variable')
+  /**
+   * Checks to see if there are attributes not in attr that are in obj. Throws if that is the case.
+   *
+   * @param {Array.<string>} attrs - Array of valid attributes
+   * @param {string} msg - A string message to throw if this fails
+   */
+  _checkVars (attrs, msg) {
+    let obj = this.obj
+
+    for (var key in obj) {
+      if (!attrs.includes(key)) {
+        throw new Error(msg)
       }
     }
   }
 
-  _checkVerifyExpression (obj) {
-    const { left, comparator, right, variable, expression } = obj
+  /**
+   * Constructs a modifier style string from this.obj
+   */
+  _checkMakeModifer () {
+    const { modifier, value } = this.obj
 
-    if (expression && (left || comparator || right || variable)) {
-      throw new Error('expression overrides (subject, comparator, object, and variable) please clean your $filter param')
+    if (!MODIFIER_MAP.hasOwnProperty(modifier)) {
+      throw new Error(`'${modifier}', is not a valid modifier`)
     }
 
-    if (!expression) {
-      if (!(left || comparator || right)) {
-        throw new Error('(subject, comparator, and object) must be specified, otherwise use `expression`')
-      }
+    // Grab the modification fn and construct str
+    let mod = MODIFIER_MAP[modifier]
+    this.str = mod(value)
+    // Flag so that the upper level knows.
+    this.setFlag(FLAGS.MODIFIER)
+  }
+
+  _checkMakeLamdba () {
+    const { operation, left, right } = this.obj
+
+    // Grab the modification fn and construct str
+    let lambda = COMPARATOR_MAP[operation]
+    this.str = lambda(left, variable, right)
+  }
+
+  _checkMakeNormal () {
+    const { left, right, operation } = this.obj
+
+    if (!COMPARATOR_MAP.hasOwnProperty(operation)) {
+      throw new Error(`'${operation}', is not a valid operation`)
     }
+    if (typeof operation === 'function') {
+      acorn.parse(operation);
+    } else {
+      // Create the actual query string.
+      this.str = COMPARATOR_MAP[operation](left, right)
+    }
+  }
+
+  setFlag (flag) {
+    this.flag = flag
+  }
+  getFlag (flag) {
+    return this.flag
   }
 
   toString () {
-    let str = this.str || ''
-
-    if (str) {
-      return str
-    }
-
-    switch (this.type) {
-      case QUERY_TYPES.NORMAL:
-        this.str = '';
-      break
-      case QUERY_TYPES.LAMBDA:
-        this.str = '';
-      break
-      case QUERY_TYPES.MODIFIER:
-        this.str = '';
-      break
-      case QUERY_TYPES.GEO_DISTANCE:
-        this.styr= '';
-      break
-    }
-
-    return str
+    return this.str
   }
 }
 

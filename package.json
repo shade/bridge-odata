@@ -18,6 +18,7 @@
   "author": "Joe joetho@zillowgroup.com",
   "license": "MIT",
   "dependencies": {
+    "acorn": "^5.7.1",
     "assert": "^1.4.1",
     "mocha": "^5.2.0",
     "superagent": "^3.8.3"
