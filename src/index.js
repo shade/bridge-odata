@@ -35,19 +35,26 @@ class RetslyOData {
 
   exec (cb) {
     const {vendor, endpoint, query, token} = this
-
-    request
-      .get(`${config.BASE_URL}/${vendor}/${endpoint}`)
-      .set({'Authorization': `Bearer ${token}`})
-      .query(query)
-      .end((err, res) => {
-        // Update the response, if there are no errors
-        this.response = err
-          ? null
-          : res.body
-
-        cb(err, res)
-      })
+    return new Promise((resolve, reject) => {
+      request
+        .get(`${config.BASE_URL}/${vendor}/${endpoint}`)
+        .set({
+          'Authorization': `Bearer ${token}`,
+          'x-query-source': 'odata-sdk'
+        })
+        .query(query)
+        .end((err, res) => {
+          if (err) {
+            this.response = null
+            cb && cb(err, null)
+            reject(err)
+          } else {
+            this.response = res.body
+            cb && cb(null, res.body)
+            resolve(res.body)
+          }
+        })
+    })
   }
 
   // The endpoints form the OData API
