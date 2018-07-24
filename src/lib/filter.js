@@ -4,19 +4,10 @@ const {
   MODIFIER_MAP
 } = require('./maps')
 
-const QUERY_TYPES = {
-  NORMAL: 0x00,
-  LAMBDA: 0x01,
-  MODIFIER: 0x02,
-  GEO_DISTANCE: 0x03,
-  EXPRESSION: 0x04
-}
-
 class FilterNode {
   constructor (obj) {
     // Set for ease of access to in class helper functions
     this.obj = obj
-    this.type = null
 
     // Set the subject values recursively.
     if (typeof obj.left === 'object') {
@@ -114,25 +105,6 @@ class FilterNode {
   }
 
   toString () {
-    let str = this.str || ''
-
-    switch (this.type) {
-      case QUERY_TYPES.NORMAL:
-        this.str = '';
-      break
-      case QUERY_TYPES.LAMBDA:
-        this.str = '';
-      break
-      case QUERY_TYPES.MODIFIER:
-        this.str = '';
-      break
-      case QUERY_TYPES.GEO_DISTANCE:
-        this.str= '';
-      break
-      case QUERY_TYPES.EXPRESSION:
-      break
-    }
-
     return str
   }
 }
