@@ -5,20 +5,21 @@ const assert = require('assert')
 describe('Simple filters', () => {
   describe('eq/neq/le/gte/gt', () => {
     it('Should work without a variable', () => {
-      let f = new filter({
+      let operation = (op) => (new filter({
         left: 'a',
-        comparator: 'eq',
+        operation: op,
         right: 'b'
-      })
+      }))
 
+      f = operation('eq')
       assert.equal(f.toString(), 'a eq b')
-      f.comparator('neq')
+      f = operation('neq')
       assert.equal(f.toString(), 'a neq b')
-      f.comparator('ge')
+      f = operation('ge')
       assert.equal(f.toString(), 'a ge b')
-      f.comparator('gt')
+      f = operation('gt')
       assert.equal(f.toString(), 'a gt b')
-      f.comparator('lt')
+      f = operation('lt')
       assert.equal(f.toString(), 'a lt b')
     })
 
@@ -26,13 +27,13 @@ describe('Simple filters', () => {
       let f = new filter({
         left: {
           left: 'a',
-          comparator: 'eq',
+          operation: 'eq',
           right: 'b'
         },
-        comparator: 'and',
+        operation: 'and',
         right: {
           left: 'a',
-          comparator: 'eq',
+          operation: 'eq',
           right: 'c'
         }
       })
@@ -43,17 +44,17 @@ describe('Simple filters', () => {
       let f = new filter({
         left: {
           left: 'a',
-          comparator: 'or',
+          operation: 'or',
           right: {
             left: 'b',
-            comparator: 'lt',
+            operation: 'lt',
             right: 'c'
           }
         },
-        comparator: 'and',
+        operation: 'and',
         right: {
           left: 'a',
-          comparator: 'eq',
+          operation: 'eq',
           right: 'c'
         }
       })

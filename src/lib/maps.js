@@ -8,6 +8,10 @@ const COMPARATOR_MAP = {
   'gt': (subject, object) => `${subject} gt ${object}`,
   'ge': (subject, object) => `${subject} ge ${object}`,
 
+  // Clause operations
+  'and': (subject, object) => `${subject} and ${object}`,
+  'or': (subject, object) => `${subject} or ${object}`,
+
   // String operations
   'startswith': (subject,object) => `startswith(${subject},${object})`,
   'endswith': (subject,object) => `endswith(${subject},${object})`,

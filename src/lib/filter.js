@@ -1,4 +1,5 @@
 /* jshint esversion: 6 */
+const acorn = require('acorn');
 const {
   COMPARATOR_MAP,
   MODIFIER_MAP
@@ -11,14 +12,16 @@ class FilterNode {
 
     // Set the subject values recursively.
     if (typeof obj.left === 'object') {
-      this.subject = new FilterNode(obj.left).toString()
+      let f = new FilterNode(obj.left).toString()
+      obj.left = `(${f})`
     } else {
       this.subject = obj.left
     }
 
     // Set the object values recursively.
     if (typeof obj.right === 'object') {
-      this.object = new FilterNode(obj.right).toString()
+      let f = new FilterNode(obj.right).toString()
+      obj.right = `(${f})`
     } else {
       this.object = obj.right
     }
@@ -90,7 +93,7 @@ class FilterNode {
     const { operation, left, right } = this.obj
 
     // Grab the modification fn and construct str
-    let lambda = MODIFIER_MAP[modifier]
+    let lambda = COMPARATOR_MAP[operation]
     this.str = lambda(left, variable, right)
   }
 
@@ -100,12 +103,16 @@ class FilterNode {
     if (!COMPARATOR_MAP.hasOwnProperty(operation)) {
       throw new Error(`'${operation}', is not a valid operation`)
     }
-    // Create the actual query string.
-    this.str = COMPARATOR_MAP[operation](left, right)
+    if (typeof operation === 'function') {
+      acorn.parse(operation);
+    } else {
+      // Create the actual query string.
+      this.str = COMPARATOR_MAP[operation](left, right)
+    }
   }
 
   toString () {
-    return str
+    return this.str
   }
 }
 
