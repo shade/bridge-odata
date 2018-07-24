@@ -39,7 +39,6 @@ class RetslyOData {
       request
         .get(`${config.BASE_URL}/${vendor}/${endpoint}`)
         .set('Authorization', `Bearer ${token}`)
-        .set('x-query-source', 'odata-sdk')
         .query(query)
         .end((err, res) => {
           if (err) {
