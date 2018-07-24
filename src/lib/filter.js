@@ -17,22 +17,22 @@ class FilterNode {
 
     // Set the subject values recursively.
     if (typeof obj.left === 'object') {
-      let f = new FilterNode(obj.left).toString()
+      let f = new FilterNode(obj.left)
 
-      obj.left = (f.flag() === FLAGS.MODIFIER)
-        ? f
-        : `(${f})`
+      obj.left = (f.getFlag() === FLAGS.MODIFIER)
+        ? f.toString()
+        : `(${f.toString()})`
     } else {
       this.subject = obj.left
     }
 
     // Set the object values recursively.
     if (typeof obj.right === 'object') {
-      let f = new FilterNode(obj.right).toString()
+      let f = new FilterNode(obj.right)
 
-      obj.right = (f.flag() === FLAGS.MODIFIER)
-        ? f
-        : `(${f})`
+      obj.right = (f.getFlag() === FLAGS.MODIFIER)
+        ? f.toString()
+        : `(${f.toString()})`
     } else {
       this.object = obj.right
     }
@@ -99,7 +99,7 @@ class FilterNode {
     let mod = MODIFIER_MAP[modifier]
     this.str = mod(value)
     // Flag so that the upper level knows.
-    this.flag(FLAGS.MODIFIER)
+    this.setFlag(FLAGS.MODIFIER)
   }
 
   _checkMakeLamdba () {
@@ -124,12 +124,11 @@ class FilterNode {
     }
   }
 
-  flag (flag) {
-    if (!flag) {
-      this.flag = flag
-    } else {
-      return flag
-    }
+  setFlag (flag) {
+    this.flag = flag
+  }
+  getFlag (flag) {
+    return this.flag
   }
 
   toString () {

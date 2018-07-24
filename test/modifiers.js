@@ -21,6 +21,6 @@ describe('modifiers', () => {
       right: 'b'
     })
 
-    assert.equal(f.toString(), '(second(a)) eq b', 'second doesn\'t work')
+    assert.equal(f.toString(), 'second(a) eq b', 'second doesn')
   })
 })
