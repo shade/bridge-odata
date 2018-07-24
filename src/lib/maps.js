@@ -35,8 +35,8 @@ const MODIFIER_MAP = {
   min: s => `minute(${s})`,
   sec: s => `second(${s})`,
   // String modifiers
-  toupper: s => `toupper(${s})`,
-  tolower: s => `tolower(${s})`
+  upper: s => `toupper(${s})`,
+  lower: s => `tolower(${s})`
 }
 
 
