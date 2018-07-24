@@ -79,21 +79,27 @@ class RetslyOData {
 
   $skip (data) {
     this.query.$skip = data
+    return this
   }
   $select (data) {
     this.query.$select = data
+    return this
   }
   $top (data) {
     this.query.$top = data
+    return this
   }
   $orderby (data) {
     this.query.$orderby = data
+    return this
   }
   $expand (data) {
     this.query.$expand = data
+    return this
   }
   $filter (data) {
     this.query.$filter = new Filter(data).toString()
+    return this
   }
 
 
