@@ -16,6 +16,7 @@ class FilterNode {
   constructor (obj) {
     // Set for ease of access to in class helper functions
     this.obj = obj
+    this.type = null
 
     // Set the subject values recursively.
     if (typeof obj.left === 'object') {
@@ -58,6 +59,9 @@ class FilterNode {
       return
     }
 
+    // Because this hasn't been returned yet, it must be normal.
+    this._checkVars(['left', 'right', 'operation'], 'Your query is expressed invalidly, please check the README for more details.')
+    this._checkMakeNormal()
   }
 
   /**
@@ -97,6 +101,16 @@ class FilterNode {
     // Grab the modification fn and construct str
     let lambda = MODIFIER_MAP[modifier]
     this.str = lambda(left, variable, right)
+  }
+
+  _checkMakeNormal () {
+    const { left, right, operation } = this.obj
+
+    if (!COMPARATOR_MAP.hasOwnProperty(operation)) {
+      throw new Error(`'${operation}', is not a valid operation`)
+    }
+    // Create the actual query string.
+    this.str = COMPARATOR_MAP[operation](left, right)
   }
 
   toString () {
