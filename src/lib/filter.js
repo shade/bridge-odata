@@ -45,7 +45,19 @@ class FilterNode {
       return
     }
 
-    // Check if
+    // Check if it's lambda
+    if (['any','all'].includes(obj.operation)) {
+      this._checkVars([
+        'variable',
+        'left',
+        'inner',
+        'operation'
+      ], 'Lambdas only have `variable`, `operation`, `left`, and `right`. Please clean up the query object')
+
+      this._checkMakeLamdba()
+      return
+    }
+
   }
 
   /**
@@ -77,6 +89,14 @@ class FilterNode {
     // Grab the modification fn and construct str
     let mod = MODIFIER_MAP[modifier]
     this.str = mod(value)
+  }
+
+  _checkMakeLamdba () {
+    const { operation, left, right } = this.obj
+
+    // Grab the modification fn and construct str
+    let lambda = MODIFIER_MAP[modifier]
+    this.str = lambda(left, variable, right)
   }
 
   toString () {
