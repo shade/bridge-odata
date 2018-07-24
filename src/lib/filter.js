@@ -5,6 +5,11 @@ const {
   MODIFIER_MAP
 } = require('./maps')
 
+// None of these are allowed to be 0, ever.
+const FLAGS = {
+  MODIFIER: 0x01
+}
+
 class FilterNode {
   constructor (obj) {
     // Set for ease of access to in class helper functions
@@ -13,7 +18,10 @@ class FilterNode {
     // Set the subject values recursively.
     if (typeof obj.left === 'object') {
       let f = new FilterNode(obj.left).toString()
-      obj.left = `(${f})`
+
+      obj.left = (f.flag() === FLAGS.MODIFIER)
+        ? f
+        : `(${f})`
     } else {
       this.subject = obj.left
     }
@@ -21,7 +29,10 @@ class FilterNode {
     // Set the object values recursively.
     if (typeof obj.right === 'object') {
       let f = new FilterNode(obj.right).toString()
-      obj.right = `(${f})`
+
+      obj.right = (f.flag() === FLAGS.MODIFIER)
+        ? f
+        : `(${f})`
     } else {
       this.object = obj.right
     }
@@ -87,6 +98,8 @@ class FilterNode {
     // Grab the modification fn and construct str
     let mod = MODIFIER_MAP[modifier]
     this.str = mod(value)
+    // Flag so that the upper level knows.
+    this.flag(FLAGS.MODIFIER)
   }
 
   _checkMakeLamdba () {
@@ -108,6 +121,14 @@ class FilterNode {
     } else {
       // Create the actual query string.
       this.str = COMPARATOR_MAP[operation](left, right)
+    }
+  }
+
+  flag (flag) {
+    if (!flag) {
+      this.flag = flag
+    } else {
+      return flag
     }
   }
 
