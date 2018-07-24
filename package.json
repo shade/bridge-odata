@@ -1,5 +1,5 @@
 {
-  "name": "odata-js-sdk",
+  "name": "bridge-odata",
   "version": "0.0.1",
   "description": "Retsly OData JS SDK",
   "main": "src/index.js",

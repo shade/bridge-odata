@@ -49,6 +49,8 @@ class RetslyOData {
         cb(err, res)
       })
   }
+
+  // The endpoints form the OData API
   Property (key) {
     // Response reset, otherwise count(), next(), and prev() will still work.
     this.response = null
@@ -74,6 +76,28 @@ class RetslyOData {
     return this
   }
 
+
+  $skip (data) {
+    this.query.$skip = data
+  }
+  $select (data) {
+    this.query.$select = data
+  }
+  $top (data) {
+    this.query.$top = data
+  }
+  $orderby (data) {
+    this.query.$orderby = data
+  }
+  $expand (data) {
+    this.query.$expand = data
+  }
+  $filter (data) {
+    this.query.$filter = new Filter(data).toString()
+  }
+
+
+  // Helper functions
   count () {
     this._verifyResponse('count()')
     let value = this.response.value
