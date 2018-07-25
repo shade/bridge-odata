@@ -14,9 +14,6 @@ class RetslyOData {
     if (!token) {
       throw new Error('Please provide a token :)')
     }
-    if (!vendor) {
-      throw new Error('Please provide a vendor :)')
-    }
 
     this.endpoint = null
     this.response = null
