@@ -1,5 +1,5 @@
-let sdk = require('../src/index')
-let filter = require('../src/lib/filter')
+const sdk = require('../src/index')
+const filter = require('../src/lib/filter')
 const assert = require('assert')
 
 describe('modifiers', () => {

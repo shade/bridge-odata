@@ -1,4 +1,4 @@
-let filter = require('../src/lib/filter')
+const filter = require('../src/lib/filter')
 const assert = require('assert')
 
 

@@ -113,12 +113,22 @@ class FilterNode {
   _checkMakeNormal () {
     const { left, right, operation } = this.obj
 
-    if (!COMPARATOR_MAP.hasOwnProperty(operation)) {
-      throw new Error(`'${operation}', is not a valid operation`)
-    }
     if (typeof operation === 'function') {
-      acorn.parse(operation);
+      let names = acorn.parse(operation).body[0].expression.params.map(param => param.name);
+      // The parameters must be left or right
+      if ((!names.includes('left') || !names.includes('right')) || names.length > 2) {
+        throw new Error(`custom operation must only include parameters left and right ${names} is an invalid set.`)
+      }
+      // Either parameters are (left,right) or (right,left)
+      if (names[0] === 'left') {
+        this.str = operation(left, right)
+      } else {
+        this.str = operation(right, left)
+      }
     } else {
+      if (!COMPARATOR_MAP.hasOwnProperty(operation)) {
+        throw new Error(`'${operation}', is not a valid operation`)
+      }
       // Create the actual query string.
       this.str = COMPARATOR_MAP[operation](left, right)
     }
