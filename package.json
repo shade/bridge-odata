@@ -1,6 +1,6 @@
 {
   "name": "bridge-odata",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Retsly OData JS SDK",
   "main": "src/index.js",
   "scripts": {

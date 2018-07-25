@@ -15,6 +15,7 @@ const COMPARATOR_MAP = {
   // String operations
   'startswith': (subject,object) => `startswith(${subject},${object})`,
   'endswith': (subject,object) => `endswith(${subject},${object})`,
+  'contains': (subject,object) => `contains(${subject},${object})`,
 
   // Geo / Distance operationss
   'distance': (subject,object,op,c) => `geo.distance(${subject},${object}) ${op} ${c}`,
