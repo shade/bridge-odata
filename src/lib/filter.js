@@ -114,7 +114,15 @@ class FilterNode {
     const { left, right, operation } = this.obj
 
     if (typeof operation === 'function') {
-      let names = acorn.parse(operation).body[0].expression.params.map(param => param.name);
+      let body = acorn.parse(operation).body[0]
+      let names
+
+      if (body.expression) {
+        names = body.expression.params.map(param => param.name)
+      } else {
+        names = body.params.map(param => param.name)
+      }
+
       // The parameters must be left or right
       if ((!names.includes('left') || !names.includes('right')) || names.length > 2) {
         throw new Error(`custom operation must only include parameters left and right ${names} is an invalid set.`)

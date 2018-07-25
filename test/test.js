@@ -1,10 +1,12 @@
-const Retsly = require('../src/index')
+const Bridge = require('../src/index')
 const assert = require('assert')
+
+Bridge.TEST_TOKEN = '6baca547742c6f96a6ff71b138424f21'
 
 describe('No param routes', () => {
   describe('Property', () => {
     it('should return a list of properties and get one', done => {
-      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
+      let r = new Bridge(Bridge.TEST_TOKEN, 'test')
       r.Property()
       r.exec((err, res) => {
         assert(res.value.length > 0, 'should return more than one property')
@@ -17,7 +19,7 @@ describe('No param routes', () => {
       })
     })
     it('should work with the Properties alias', done => {
-      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
+      let r = new Bridge(Bridge.TEST_TOKEN, 'test')
       r.Properties()
       r.exec((err, res) => {
         assert(res.value.length > 0, 'should return more than one property')
@@ -33,7 +35,7 @@ describe('No param routes', () => {
 
   describe('OpenHouse', () => {
     it('should return a list of OpenHouse and get one', done => {
-      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
+      let r = new Bridge(Bridge.TEST_TOKEN, 'test')
         .OpenHouse()
         r.exec((err, res) => {
           assert(res.value.length > 0, 'should return more than one property')
@@ -49,7 +51,7 @@ describe('No param routes', () => {
 
   describe('Office', () => {
     it('should return a list of Office and get one', done => {
-      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
+      let r = new Bridge(Bridge.TEST_TOKEN, 'test')
         .Office()
         r.exec((err, res) => {
           assert(res.value.length > 0, 'should return more than one property')
@@ -65,7 +67,7 @@ describe('No param routes', () => {
 
   describe('Member', () => {
     it('should return a list of Member and get one', done => {
-      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
+      let r = new Bridge(Bridge.TEST_TOKEN, 'test')
         .Member()
         r.exec((err, res) => {
           assert(res.value.length > 0, 'should return more than one property')

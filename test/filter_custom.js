@@ -44,12 +44,12 @@ describe('Filters with Custom Functions', () => {
     })
   })
 
-  describe('Standard Anonymous Function notation', () => {
+  describe('Standard Named Function notation', () => {
     it('Should work with correct names', () => {
       let f = new Filter({
         left: 'a',
         right: 'b',
-        operation: function (left, right) {
+        operation: function a(left, right) {
           return `${left} == ${right}`
         }
       })
@@ -60,7 +60,9 @@ describe('Filters with Custom Functions', () => {
       let f = new Filter({
         left: 'a',
         right: 'b',
-        operation: (right, left) => `${left} == ${right}`
+        operation: function a(right, left) {
+          return `${left} == ${right}`
+        }
       })
 
       assert.equal(f.toString(), 'a == b', `${f.toString()} Doesnt work with same param names`)
@@ -71,7 +73,9 @@ describe('Filters with Custom Functions', () => {
         let f = new Filter({
           left: 'a',
           right: 'b',
-          operation: (right, a, left) => `${left} =${a}= ${right}`
+          operation: function a(right, a, left) {
+            return `${left} =${a}= ${right}`
+          }
         })
       }, Error)
     })
@@ -81,7 +85,9 @@ describe('Filters with Custom Functions', () => {
         let f = new Filter({
           left: 'a',
           right: 'b',
-          operation: (left) => `${left} == lol`
+          operation: function (left) {
+            return `${left} == lol`
+          }
         })
       }, Error)
     })
