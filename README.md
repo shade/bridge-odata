@@ -30,9 +30,17 @@ The SDK part of the code looks like:
     let prim = Bridge.Properties()
       .$select('','')
       .$filter({
-        left: 'UnparsedAddress',
-        comparator: 'startswith',
-        right: address
+        left: {
+          left: 'UnparsedAddress',
+          comparator: 'neq',
+          right: 'null'
+        },
+        comparator: 'and',
+        right: {
+          left: 'UnparsedAddress',
+          comparator: 'startswith',
+          right: `'${address}'` // Note: string quotes are not auto inferred.
+        }
       })
       .exec()
 
