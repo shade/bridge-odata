@@ -26,6 +26,10 @@ The SDK part of the code looks like:
 
   const Bridge = new BridgeAPI(BridgeAPI.TEST_TOKEN)
 
+  /**
+   * @param {string} address - The beginning of an address e.g. `1120 Mi`
+   * @returns {Promise} - resolves if the API request is successful.
+   */
   function autocomplete (address) {
     let prim = Bridge.Properties()
       .$select('','')
@@ -74,6 +78,9 @@ Paginates to the next page of results.
 
 ### bridge.prev()
 Paginates to the previous page of results.
+
+### bridge.exec([cb])
+Executes the API query, will return a Promise if no callback is specified, otherwise, calls a the callback `cb(err, resp)`
 
 ## OData Specific Params
 
