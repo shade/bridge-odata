@@ -120,6 +120,30 @@ The full list of operations can be found in the `src/lib/maps.js' file, but are 
 |gt| 'a gt b' | checks if a > b |
 |ge| 'a ge b' | checks if a >= b |
 |le| 'a le b' | checks if a <= b |
+|and| | |
+|or| | |
+|startswith| | |
+|endswith| | |
+|contains| | |
+|distance| | |
+|intersect| | |
+|any| | |
+|all| | |
+
+#### Modifiers
+Modifiers modify a specific response field. The full list of modifiers can be found in the `src/lib/maps.js' file, but are not limited to:
+
+|Name | Operation | Description |
+| -- | -- | -- |
+|time| 'time(a)' | Grabs the time of the response date field |
+|year| 'year(a)' | Grabs the year of the response date field |
+|month| 'month(a)' | Grabs the month of the response date field |
+|day| 'day(a)' | Grabs the day of the response date field |
+|hour| 'hour(a)' | Grabs the hour of the response date field |
+|min| 'min(a)' | Grabs the min of the response date field |
+|sec| 'sec(a)' | Grabs the sec of the response date field |
+|upper| 'upper(a)' | Grabs the upper of the response date field |
+|lower| 'lower(a)' | Grabs the lower of the response date field |
 
 #### Lambdas
 The `any` and `all` operations are referred to and act as lambdas in the OData syntax.
