@@ -16,31 +16,9 @@
     .exec()
 ```
 
-## API
-### new BridgeAPI(token, [vendor])
-Returns a new instance of BridgeAPI. Requires an API token and optionally set the vendor (the MLS data source), defaults to `test`.
 
-## bridge.Property([ListingKey])
-## bridge.Member([MemberKey])
-## bridge.Office([OfficeKey])
-## bridge.OpenHouse([OpenHouseKey])
-Returns a single entity if a key is specified. If a key is not specified all related entities are returned.
-
-## bridge.Media()
-Returns all media.
-
-## bridge.count()
-The number of results from the most recent query, set to 0 before and during query execution.
-
-## bridge.next()
-Paginates to the next page of results.
-
-## bridge.prev()
-Paginates to the previous page of results.
-
-
-## Example
-A simple example of an autocomplete can be seen here,
+## Demo
+A simple demo of an autocomplete can be seen here,
 The SDK part of the code looks like:
 
 ```js
@@ -62,6 +40,50 @@ The SDK part of the code looks like:
   }
 ```
 
+
+## API
+### new BridgeAPI(token, [vendor])
+Returns a new instance of BridgeAPI. Requires an API token and optionally set the vendor (the MLS data source), defaults to `test`.
+
+### bridge.Property([ListingKey])
+Returns a single property if a ListingKey is specified. Otherwise will return a list of properties that fulfill the criteria. This function has an alias: `bridge.Properties`
+
+### bridge.Member([MemberKey])
+### bridge.Office([OfficeKey])
+### bridge.OpenHouse([OpenHouseKey])
+Returns a single entity if a key is specified. If a key is not specified all related entities are returned.
+
+
+
+### bridge.Media()
+Returns all media.
+
+### bridge.count()
+The number of results from the most recent query, set to 0 before and during query execution.
+
+### bridge.next()
+Paginates to the next page of results.
+
+### bridge.prev()
+Paginates to the previous page of results.
+
+## OData Specific Params
+
+### bridge.$skip(n)
+  Skips the first n items.
+### bridge.$select(attributes)
+  Select items that have the following specific attributes, accepts an array of attributes or a comma seperated string. e.g.
+  ```js
+    bridge.$select('StandardStatus,UnparsedAddress')
+    // Is the same as:
+    bridge.$select(['StandardStatus','UnparsedAddress'])
+  ```
+### bridge.$top(n)
+  Only returns the top n items.
+### bridge.$orderby(str)
+  Skips the first n items.
+### bridge.$expand(attribute)
+  Expands the provided attribute, also accepts an array or comma seperated string of attributes.
 
 ## bridge.$filter(query)
 

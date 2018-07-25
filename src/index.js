@@ -61,6 +61,11 @@ class RetslyOData {
     this.endpoint = `Property${key?`(${key})`:''}`
     return this
   }
+  // Alias of Property
+  Properties (key) {
+    return this.Property.apply(this, arguments)
+  }
+
   Member (key) {
     // Response reset, otherwise count(), next(), and prev() will still work.
     this.response = null
@@ -86,7 +91,7 @@ class RetslyOData {
     return this
   }
   $select (data) {
-    this.query.$select = data
+    this.query.$select = this._collapseCheckArray(data)
     return this
   }
   $top (data) {
@@ -98,14 +103,13 @@ class RetslyOData {
     return this
   }
   $expand (data) {
-    this.query.$expand = data
+    this.query.$expand = this._collapseCheckArray(data)
     return this
   }
   $filter (data) {
     this.query.$filter = new Filter(data).toString()
     return this
   }
-
 
   // Helper functions
   count () {
@@ -151,6 +155,24 @@ class RetslyOData {
     }
 
     return config.DEFAULT_BUNDLE_LENGTH
+  }
+
+  _collapseCheckArray (data, field) {
+    if (data instanceof Array) {
+      return data.join(',')
+    } else {
+      try {
+        if (typeof data === 'string') {
+          return data
+        } else if (data.toString() === '[object Object]') {
+          throw false
+        } else {
+          return data.toString()
+        }
+      } catch (e) {
+        throw new Error(`The datatype you provided for ${field} does not convert to a string...`)
+      }
+    }
   }
 }
 

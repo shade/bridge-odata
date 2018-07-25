@@ -16,6 +16,19 @@ describe('No param routes', () => {
           })
       })
     })
+    it('should work with the Properties alias', done => {
+      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
+      r.Properties()
+      r.exec((err, res) => {
+        assert(res.value.length > 0, 'should return more than one property')
+        r
+          .Properties(res.value[0].ListingKey)
+          .exec((err, res) => {
+            assert(Object.keys(res).length > 4, 'should return one non invalid object')
+            done()
+          })
+      })
+    })
   })
 
   describe('OpenHouse', () => {
