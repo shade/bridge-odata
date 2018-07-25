@@ -12,7 +12,10 @@ class RetslyOData {
     }
 
     if (!token) {
-      throw new Error('Please provide a token. Otherwise, use the test token via Retsly.TEST_TOKEN')
+      throw new Error('Please provide a token :)')
+    }
+    if (!vendor) {
+      throw new Error('Please provide a vendor :)')
     }
 
     this.endpoint = null
@@ -176,7 +179,5 @@ class RetslyOData {
   }
 }
 
-// Constants
-RetslyOData.TEST_TOKEN = config.TEST_TOKEN
 
 module.exports = RetslyOData
