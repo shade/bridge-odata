@@ -1,7 +1,7 @@
 {
   "name": "bridge-odata",
-  "version": "0.0.8",
-  "description": "Retsly OData JS SDK",
+  "version": "0.0.9",
+  "description": "Bridge API OData JS SDK",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha --timeout 10000"
@@ -16,7 +16,7 @@
     "test"
   ],
   "author": "Joe joetho@zillowgroup.com",
-  "license": "MIT",
+  "license": "GPLv3",
   "dependencies": {
     "acorn": "^5.7.1",
     "assert": "^1.4.1",
