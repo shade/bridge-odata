@@ -142,6 +142,26 @@ Modifiers modify a specific response field. The full list of modifiers can be fo
 |upper| `upper(a)` | Converts the response field to uppercase |
 |lower| `lower(a)` | Converts the response field to lowercase |
 
+When using a modifier, one must move the tradititional syntax to that with a modifier, e.g.
+```js
+// Traditional syntax
+{
+  left: "'joe'"
+}
+```
+to
+```js
+// Modifier syntax
+{
+  left: {
+    modifier: "upper",
+    value: "'joe'"
+  }
+}
+```
+
+Modifiers only work when the object fields are `modifier` and `value` exclusively.
+
 #### Lambdas
 The `any` and `all` operations are referred to and act as lambdas in the OData syntax. Lambda based filters require 4 parts, `left`, `variable`, `operation`, and `inner`. However, `inner` breaks down into
 
