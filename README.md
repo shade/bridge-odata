@@ -163,7 +163,28 @@ to
 Modifiers only work when the object fields are `modifier` and `value` exclusively.
 
 #### Lambdas
-The `any` and `all` operations are referred to and act as lambdas in the OData syntax. Lambda based filters require 4 parts, `left`, `variable`, `operation`, and `inner`. However, `inner` breaks down into
+The `any` and `all` operations are referred to and act as lambdas in the OData syntax. Lambda based filters require 4 parts, `left`, `variable`, `operation`, and `inner`. However, `inner` breaks down into its own simple clause. e.g.
+```
+// Select all the properties where all the agents are syndicate to Zillows
+{
+  left: 'SyndicateTo',
+  operation: 'all',
+  variable: 'a',
+  inner: {
+    expr: 'le 10'
+  }
+}
+// OR, the following is an equivalent statement
+{
+  left: 'SyndicateTo',
+  operation: 'all',
+  variable: 'a',
+  inner: {
+    operation: 'le',
+    right: '10'
+  }
+}
+```
 
 
 ### Custom operations (unsafe)
