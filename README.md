@@ -196,7 +196,7 @@ In the event that one is aware of an operation that currently doesn't exist with
 {
   right: 'Joe',
   left: '"The greatest person ever"',
-  op: (right, left) => `${right} eq ${left}`
+  operation: (right, left) => `${right} eq ${left}`
 } => 'Joe eq "The greatest person ever"'
 
 ```
@@ -207,6 +207,6 @@ In the event that one is aware of an operation that currently doesn't exist with
 {
   right: 'Joe',
   left: '"The greatest person ever"',
-  op: (a,b) => `${a} eq ${b}`
+  operation: (a,b) => `${a} eq ${b}`
 } => ERROR
 ```
