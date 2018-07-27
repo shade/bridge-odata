@@ -40,6 +40,8 @@ class FilterNode {
     if (obj.inner && typeof obj.inner === 'object') {
       obj.inner = new FilterNode(obj.inner).toString()
     }
+
+
     // Check if it's an expression
     if (obj.expr) {
       this._checkVars(['expr'], 'You added `expr`, remove other attributes, or remove `expr`')

@@ -92,11 +92,12 @@ Executes the API query, will return a Promise if no callback is specified, other
     bridge.$select('StandardStatus,UnparsedAddress')
     // Is the same as:
     bridge.$select(['StandardStatus','UnparsedAddress'])
+    // Is the same as:
+    bridge.$select('StandardStatus','UnparsedAddress')
   ```
 ### bridge.$top(n)
   Only returns the top n items.
 ### bridge.$orderby(str)
-  Skips the first n items.
 ### bridge.$expand(attribute)
   Expands the provided attribute, also accepts an array or comma seperated string of attributes.
 

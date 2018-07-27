@@ -28,16 +28,16 @@ const COMPARATOR_MAP = {
 
 const MODIFIER_MAP = {
   // Datetime modifier
-  time: s => `time(${s})`,
-  year: s => `year(${s})`,
-  month: s => `month(${s})`,
-  day: s => `day(${s})`,
-  hour: s => `hour(${s})`,
-  min: s => `minute(${s})`,
-  sec: s => `second(${s})`,
+  'time': s => `time(${s})`,
+  'year': s => `year(${s})`,
+  'month': s => `month(${s})`,
+  'day': s => `day(${s})`,
+  'hour': s => `hour(${s})`,
+  'min': s => `minute(${s})`,
+  'sec': s => `second(${s})`,
   // String modifiers
-  upper: s => `toupper(${s})`,
-  lower: s => `tolower(${s})`
+  'upper': s => `toupper(${s})`,
+  'lower': s => `tolower(${s})`
 }
 
 

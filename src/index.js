@@ -26,7 +26,7 @@ class RetslyOData {
 
     let url = `${config.BASE_URL}/${vendor}/${endpoint}?`
 
-    for (var param in query) {
+    for (let param in query) {
       base += `${param}=${query[param]}&`
     }
 
@@ -86,8 +86,17 @@ class RetslyOData {
   }
 
 
-  $skip (data) {
-    this.query.$skip = data
+  $skip (data, increment) {
+    if (increment) {
+      this.query.$skip += data
+    } else {
+      this.query.$skip = data
+    }
+
+    if (this.query.$skip < 0) {
+      this.query.$skip = 0
+    }
+
     return this
   }
   $select (data) {
@@ -130,6 +139,7 @@ class RetslyOData {
     this._verifyResponse('next()')
     // If we have hit the end.
     if (this.$skip >= this.count()) {
+      // TODO:  Use exec format.
       return []
     }
     this.$skip(this._bundleLength(), true)
@@ -140,7 +150,9 @@ class RetslyOData {
     this._verifyResponse('prev()')
     // If we have hit the beginning.
     if (this.$skip <= 0) {
-      return []
+      // TODO:  Use exec format.
+      return cb&&cb([])
+
     }
     this.$skip(-this._bundleLength(), true)
     return this.exec(cb)
