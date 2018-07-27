@@ -115,7 +115,6 @@ class RetslyOData {
     return this
   }
 
-  // Helper functions
   count () {
     this._verifyResponse('count()')
     let value = this.response.value
@@ -177,6 +176,10 @@ class RetslyOData {
         throw new Error(`The datatype you provided for ${field} does not convert to a string...`)
       }
     }
+  }
+
+  _getFilter () {
+    return this.query.$filter
   }
 }
 
