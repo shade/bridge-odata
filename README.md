@@ -171,7 +171,7 @@ The `any` and `all` operations are referred to and act as lambdas in the OData s
   operation: 'all',
   variable: 'a',
   inner: {
-    expr: 'le 10'
+    expr: 'a le 10'
   }
 }
 // OR, the following is an equivalent statement
@@ -180,6 +180,7 @@ The `any` and `all` operations are referred to and act as lambdas in the OData s
   operation: 'all',
   variable: 'a',
   inner: {
+    left: 'a'
     operation: 'le',
     right: '10'
   }
