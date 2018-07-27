@@ -107,7 +107,11 @@ class RetslyOData {
     return this
   }
   $filter (data) {
-    this.query.$filter = new Filter(data).toString()
+    if (this.query.$filter) {
+      this.query.$filter += ` and ${new Filter(data).toString()}`
+    } else {
+      this.query.$filter = new Filter(data).toString()
+    }
     return this
   }
 
