@@ -37,6 +37,9 @@ class FilterNode {
       this.object = obj.right
     }
 
+    if (obj.inner && typeof obj.inner === 'object') {
+      obj.inner = new FilterNode(obj.inner).toString()
+    }
     // Check if it's an expression
     if (obj.expr) {
       this._checkVars(['expr'], 'You added `expr`, remove other attributes, or remove `expr`')
@@ -58,7 +61,7 @@ class FilterNode {
         'left',
         'inner',
         'operation'
-      ], 'Lambdas only have `variable`, `operation`, `left`, and `right`. Please clean up the query object')
+      ], 'Lambdas only have `variable`, `operation`, `left`, and `inner`. Please clean up the query object')
 
       this._checkMakeLamdba()
       return
@@ -103,11 +106,11 @@ class FilterNode {
   }
 
   _checkMakeLamdba () {
-    const { operation, left, right } = this.obj
+    const { operation, variable, left, inner } = this.obj
 
     // Grab the modification fn and construct str
     let lambda = COMPARATOR_MAP[operation]
-    this.str = lambda(left, variable, right)
+    this.str = lambda(left, variable, inner)
   }
 
   _checkMakeNormal () {
