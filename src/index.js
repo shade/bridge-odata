@@ -100,6 +100,12 @@ class RetslyOData {
     return this
   }
   $select (data) {
+    // Check to see if function is called via
+    // f(a,b,c,d) if so a = [a,b,c,d].
+    // Leverages the next line that collapse checks it.
+    if (arguments.length > 1) {
+      data = arguments
+    }
     this.query.$select = this._collapseCheckArray(data)
     return this
   }
@@ -107,11 +113,17 @@ class RetslyOData {
     this.query.$top = data
     return this
   }
-  $orderby (data) {
-    this.query.$orderby = data
+  $orderby (field, order) {
+    this.query.$orderby = `${field} ${order.toLowerCase()}`
     return this
   }
   $expand (data) {
+    // Check to see if function is called via
+    // f(a,b,c,d) if so a = [a,b,c,d].
+    // Leverages the next line that collapse checks it.
+    if (arguments.length > 1) {
+      data = arguments
+    }
     this.query.$expand = this._collapseCheckArray(data)
     return this
   }

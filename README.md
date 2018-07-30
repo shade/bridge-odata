@@ -97,7 +97,9 @@ Executes the API query, will return a Promise if no callback is specified, other
   ```
 ### bridge.$top(n)
   Only returns the top n items.
-### bridge.$orderby(str)
+### bridge.$orderby(field, order)
+  Sets the $orderby parameter based on the `field` and `order` params, `order` must be either `ASC` or `DESC` case insensitive.
+
 ### bridge.$expand(attribute)
   Expands the provided attribute, also accepts an array or comma seperated string of attributes.
 
