@@ -1,4 +1,0 @@
-- Fix the page size next() and prev()
-- Fix up count. OData $inlinecount
-- Change orderby to (field, order)
-- Remove flags in FilterNode. Replace with Boolean flag for brackets.

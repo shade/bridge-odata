@@ -5,11 +5,6 @@ const {
   MODIFIER_MAP
 } = require('./maps')
 
-// None of these are allowed to be 0, ever.
-const FLAGS = {
-  MODIFIER: 0x01
-}
-
 class FilterNode {
   constructor (obj) {
     // Set for ease of access to in class helper functions
@@ -19,7 +14,7 @@ class FilterNode {
     if (typeof obj.left === 'object') {
       let f = new FilterNode(obj.left)
 
-      obj.left = (f.getFlag() === FLAGS.MODIFIER)
+      obj.left = f.isFlagged()
         ? f.toString()
         : `(${f.toString()})`
     } else {
@@ -30,7 +25,7 @@ class FilterNode {
     if (typeof obj.right === 'object') {
       let f = new FilterNode(obj.right)
 
-      obj.right = (f.getFlag() === FLAGS.MODIFIER)
+      obj.right = f.isFlagged()
         ? f.toString()
         : `(${f.toString()})`
     } else {
@@ -104,7 +99,7 @@ class FilterNode {
     let mod = MODIFIER_MAP[modifier]
     this.str = mod(value)
     // Flag so that the upper level knows.
-    this.setFlag(FLAGS.MODIFIER)
+    this.setFlag()
   }
 
   _checkMakeLamdba () {
@@ -147,11 +142,11 @@ class FilterNode {
     }
   }
 
-  setFlag (flag) {
-    this.flag = flag
+  setFlag () {
+    this._flag = true
   }
-  getFlag (flag) {
-    return this.flag
+  isFlagged () {
+    return this._flag || false
   }
 
   toString () {
