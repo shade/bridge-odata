@@ -24,7 +24,7 @@ The SDK part of the code looks like:
 ```js
   var BridgeAPI = require('./odata-js-sdk')
 
-  const Bridge = new BridgeAPI(BridgeAPI.TEST_TOKEN)
+  const Bridge = new BridgeAPI('6baca547742c6f96a6ff71b138424f21')
 
   /**
    * @param {string} address - The beginning of an address e.g. `1120 Mi`
