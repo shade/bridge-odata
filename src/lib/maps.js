@@ -18,7 +18,7 @@ const COMPARATOR_MAP = {
   'contains': (subject,object) => `contains(${subject},${object})`,
 
   // Geo / Distance operationss
-  'distance': (subject,object,op,c) => `geo.distance(${subject},${object}) ${op} ${c}`,
+  'distance': (subject,object) => `geo.distance(${subject},${object})`,
   'intersect': (subject,object) => `geo.intersect(${subject},${object})`,
 
   // Lambda operations

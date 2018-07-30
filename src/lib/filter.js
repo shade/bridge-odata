@@ -112,7 +112,6 @@ class FilterNode {
 
   _checkMakeNormal () {
     const { left, right, operation } = this.obj
-
     if (typeof operation === 'function') {
       let body = acorn.parse(operation).body[0]
       let names
@@ -137,6 +136,12 @@ class FilterNode {
       if (!COMPARATOR_MAP.hasOwnProperty(operation)) {
         throw new Error(`'${operation}', is not a valid operation`)
       }
+
+      // Geodistance needs to be flagged.
+      if (operation === 'distance') {
+        this.setFlag()
+      }
+
       // Create the actual query string.
       this.str = COMPARATOR_MAP[operation](left, right)
     }
