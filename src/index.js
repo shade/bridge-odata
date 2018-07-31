@@ -2,7 +2,7 @@ const request = require('superagent')
 const config = require('./config')
 const Filter = require('./lib/filter')
 
-class RetslyOData {
+class BridgeOData {
 
   constructor (token, vendor) {
     if (!vendor) {
@@ -87,6 +87,9 @@ class RetslyOData {
 
 
   $skip (data, increment) {
+    if (!this.query.$skip) {
+      this.query.$skip = 0
+    }
     if (increment) {
       this.query.$skip += data
     } else {
@@ -138,13 +141,9 @@ class RetslyOData {
 
   count () {
     this._verifyResponse('count()')
-    let value = this.response.value
+    let { response } = this
 
-    if (value.length) {
-      return value.length
-    } else {
-      return 0
-    }
+    return response['@odata.count'] || 0
   }
 
   next (cb) {
@@ -172,7 +171,7 @@ class RetslyOData {
 
   /** namespaced for private access */
   _verifyResponse (command) {
-    if (!this.response || this.response.status !== 200) {
+    if (!this.response) {
       throw new Error(`Please execute a valid query before using ${command}`)
     }
   }
@@ -208,4 +207,4 @@ class RetslyOData {
 }
 
 
-module.exports = RetslyOData
+module.exports = BridgeOData
