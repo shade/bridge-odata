@@ -2,11 +2,11 @@
 
 ## Installation
 ```bash
- npm install restly/odata-js-sdk
+ npm install bridge-odata
 ```
 ## Usage
 ```js
-  var bridge = require('odata-js-sdk')
+  var bridge = require('bridge-odata')
   // Vendor defaults to `test`
   var bridge = new BridgeAPI(ACCESS_TOKEN, [vendor])
 
@@ -22,7 +22,7 @@ A simple demo of an autocomplete can be seen here,
 The SDK part of the code looks like:
 
 ```js
-  var BridgeAPI = require('./odata-js-sdk')
+  var BridgeAPI = require('bridge-odata')
 
   const Bridge = new BridgeAPI('6baca547742c6f96a6ff71b138424f21')
 
