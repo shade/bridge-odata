@@ -131,11 +131,7 @@ class BridgeOData {
     return this
   }
   $filter (data) {
-    if (this.query.$filter) {
-      this.query.$filter += ` and ${new Filter(data).toString()}`
-    } else {
-      this.query.$filter = new Filter(data).toString()
-    }
+    this.query.$filter = new Filter(data).toString()
     return this
   }
 
